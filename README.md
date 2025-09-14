@@ -59,41 +59,6 @@ Here's a preview of the LungScan-AI application interface:
 - PyTorch for deep learning (ResNet18)
 - SQLite for database
 
-## Installation
-
-1. Clone the repository:
-```bash
-git clone [your-repo-url]
-cd LungScan-AI
-```
-
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-3. Set up secrets:
-   - Copy `.streamlit/secrets.template.toml` to `.streamlit/secrets.toml`
-   - Fill in your credentials in `secrets.toml`:
-   ```toml
-   ADMIN_USERNAME = "your_admin_username"
-   ADMIN_PASSWORD = "your_secure_password"
-   DATABASE_PATH = "your_database_path"
-   MODEL_URL = "your_model_download_url"
-   ```
-   - Never commit `secrets.toml` to version control
-
-4. Ensure the model file is in the correct location:
-```
-models/lung_cancer_detector.pth
-```
-
-## Running the Application
-
-```bash
-streamlit run src/app.py
-```
-
 ## Deployment
 
 ### Local Deployment
