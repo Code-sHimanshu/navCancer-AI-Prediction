@@ -25,8 +25,19 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS with added styles for popup
-st.markdown("""
+# Add this after the imports
+if 'dark_mode' not in st.session_state:
+    st.session_state.dark_mode = False
+
+# Add this before any other content
+col1, col2, col3 = st.columns([1, 8, 1])
+with col1:
+    if st.button("🌓" if st.session_state.dark_mode else "🌞"):
+        st.session_state.dark_mode = not st.session_state.dark_mode
+        st.rerun()
+
+# Update the CSS to include dark mode
+st.markdown(f"""
     <style>
     .main {
         padding: 0rem 0rem;
@@ -108,7 +119,7 @@ st.markdown("""
         font-weight: bold;
     }
     </style>
-    """, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # Initialize session states
 if 'user_consent_given' not in st.session_state:
@@ -431,14 +442,17 @@ def main():
                     <li>Detailed diagnostic report with actionable insights</li>
                     <li>Personalized decision-support framework</li>
                 </ul>
-                <p>By proceeding, you agree to provide basic demographic information necessary for report generation. All data is protected under HIPAA compliance standards and used solely for diagnostic purposes.</p>
+                <p>By proceeding, you agree to provide basic demographic information necessary for report generation.</p>
+                <div class="consent-footer">
+                    All data is protected under HIPAA compliance standards and used solely for diagnostic purposes.
+                </div>
             </div>
-            <div class="consent-actions">
+        </div>
         """, unsafe_allow_html=True)
 
         col1, col2, col3 = st.columns([1, 2, 2])
         with col2:
-            if st.button("✓ I Agree to Terms", 
+            if st.button("✓ I Agree", 
                         use_container_width=True,
                         key="agree_btn",
                         type="primary",
@@ -447,15 +461,15 @@ def main():
                 st.session_state.show_consent_popup = False
                 st.rerun()
         with col3:
-            if st.button("✗ Decline Service", 
+            if st.button("✗ Decline", 
                         use_container_width=True,
                         key="disagree_btn",
+                        type="secondary",
                         help="Continue without expert review and report features"):
                 st.session_state.user_consent_given = False
                 st.session_state.show_consent_popup = False
                 st.rerun()
         
-        st.markdown("</div></div>", unsafe_allow_html=True)
         return
     # Header
     st.title("🫁 Lung Cancer Detection System")
@@ -602,4 +616,4 @@ def main():
                         st.rerun()
 
 if __name__ == "__main__":
-    main() 
+    main()
